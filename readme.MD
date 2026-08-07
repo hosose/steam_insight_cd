@@ -200,20 +200,20 @@ steam_insight_cd/
   # Argo CD 상태 확인 - Argo CD 파트 확인
   kubectl get pods -n argocd
   ---
-    NAME                                               READY   STATUS    RESTARTS   AGE
-    argocd-application-controller-0                    1/1     Running   0          97s
-    argocd-applicationset-controller-8d6865b7f-tmmwq   1/1     Running   0          99s
-    argocd-dex-server-74bbf47cf6-hq4tm                 1/1     Running   0          99s
-    argocd-notifications-controller-84798f79-mqfgh     1/1     Running   0          98s
-    argocd-redis-79db4b8976-4ql7g                      1/1     Running   0          98s
-    argocd-repo-server-5fcf7766cd-wvkt9                1/1     Running   0          98s
-    argocd-server-978b68fb7-m9mh6                      1/1     Running   0          98s
+  NAME                                               READY   STATUS    RESTARTS   AGE                                          
+  argocd-application-controller-0                    1/1     Running   0          93s                                          
+  argocd-applicationset-controller-8d6865b7f-hr6hv   1/1     Running   0          96s
+  argocd-dex-server-74bbf47cf6-4lhtp                 1/1     Running   0          96s
+  argocd-notifications-controller-84798f79-cncfg     1/1     Running   0          95s
+  argocd-redis-79db4b8976-mt8gd                      1/1     Running   0          95s
+  argocd-repo-server-5fcf7766cd-d879l                1/1     Running   0          95s
+  argocd-server-978b68fb7-8hp9j                      1/1     Running   0          94s
   
   # Argo CD와 Github 저장소 연결 상태 확인
   kubectl get applications -n argocd
   ---
-  NAME          SYNC STATUS   HEALTH STATUS
-  steam-insight OutOfSync     Progressing
+  NAME            SYNC STATUS   HEALTH STATUS
+  steam-insight   OutOfSync     Progressing
   ---
   private인 경우 절차 추가로 문서로 제공
 ```
@@ -222,25 +222,25 @@ steam_insight_cd/
   # pod 상태 확인
   kubectl get pods -n steam-insight
   ---
-    NAME                   READY   STATUS             RESTARTS       AGE
-    was-769f6bc4d-7w86z    0/1     ImagePullBackOff   0              5m42s
-    was-cd9ccd49f-pdmvj    1/1     Running            0              130m
-    was-cd9ccd49f-xpk52    1/1     Running            0              130m
-    web-557f774fb4-j697p   0/1     ImagePullBackOff   0              5m42s
-    web-59489cc989-jdvhl   1/1     Running            4 (129m ago)   130m
-    web-59489cc989-nxqtc   1/1     Running            4 (129m ago)   130m
+  NAME                  READY   STATUS             RESTARTS   AGE
+  was-bbb5d7788-dt6m8   0/1     ImagePullBackOff   0          27s
+  was-d877fdcc9-6bhrh   1/1     Running            0          7m11s
+  was-d877fdcc9-vt48c   1/1     Running            0          7m11s
+  web-6c6996746-fsnm4   0/1     ImagePullBackOff   0          27s
+  web-d4c677695-4k4cf   1/1     Running            0          7m10s
+  web-d4c677695-td5wc   1/1     Running            0          7m10s
   
   # Ingress, ALB 주소 체크
   kubectl get ingress -n steam-insight
   ---
-    NAME         CLASS   HOSTS   ADDRESS                                                                 PORTS   AGE
-    public-alb   alb     *       k8s-deai07-publical-db3d79d7f3-1318032631.us-east-2.elb.amazonaws.com   80      108m
+  NAME         CLASS   HOSTS   ADDRESS                                                                   PORTS   AGE
+  public-alb   alb     *       k8s-steamins-publical-a5bd78dd50-1628696764.us-east-2.elb.amazonaws.com   80      7m23s
 
   # 현재 클러스터에 배포된 이미지 확인
   kubectl get deployment web was  -n steam-insight  -o jsonpath="{range .items[*]}{.metadata.name}{': '}{.spec.template.spec.containers[0].image}{'\n'}{end}"
   ---
-    web: 827913617635.dkr.ecr.us-east-2.amazonaws.com/steam-insight-dev/web:dev-latest
-    was: 827913617635.dkr.ecr.us-east-2.amazonaws.com/steam-insight-dev/was:dev-latest
+  web: 827913617635.dkr.ecr.us-east-2.amazonaws.com/steam-insight-dev/web:dev-latest
+  was: 827913617635.dkr.ecr.us-east-2.amazonaws.com/steam-insight-dev/was:dev-latest
 ```
 
 - CI 저장소 ci.yaml jobs중 `update-cd:` 이하 주석 해제
@@ -266,5 +266,5 @@ gh auth token | gh secret set CD_REPOSITORY_TOKEN --repo hosose/steam_insight_ci
 .\scripts\open-argocd.bat                                                                                                                                
 Argo CD URL      : https://localhost:8080
 Argo CD Username : admin
-Argo CD Password : eWKIVnKErJISx7Uo
+Argo CD Password : jYSEk7f2xZneZ8PE
 ```

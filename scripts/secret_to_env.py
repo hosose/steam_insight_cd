@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 
 
@@ -32,6 +33,25 @@ def main() -> None:
         "DB_USER": str(username),
         "DB_PASSWORD": str(password),
     }
+
+    # Automatically scan for local .env files and include API keys like STEAM_API_KEY
+    root_dir = Path(__file__).resolve().parents[1]
+    possible_env_paths = [
+        root_dir / ".env",
+        root_dir / "Steam_Insight_Dashboard" / ".env",
+        root_dir.parent / "steam_insight_ci" / ".env",
+        root_dir.parent / "steam_insight_ci" / "Steam_Insight_Dashboard" / ".env",
+    ]
+    for env_path in possible_env_paths:
+        if env_path.is_file():
+            for line in env_path.read_text(encoding="utf-8").splitlines():
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    k, v = line.split("=", 1)
+                    k = k.strip()
+                    v = v.strip().strip('"').strip("'")
+                    if k in ["STEAM_API_KEY", "Bedrock_API_Key", "BEDROCK_API_KEY"] and v:
+                        values[k] = v
 
     for key, value in values.items():
         if "\n" in value or "\r" in value:
