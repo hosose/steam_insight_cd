@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: de-ai-07
+  name: steam-insight
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: de-ai-07
+  project: steam-insight
 
   source:
     repoURL: "__CD_REPO_URL__"
@@ -15,7 +15,7 @@ spec:
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: de-ai-07
+    namespace: steam-insight
 
   syncPolicy:
     automated:

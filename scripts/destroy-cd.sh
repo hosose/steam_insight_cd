@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-kubectl delete application de-ai-07 \
+kubectl delete application steam-insight \
   -n argocd \
   --ignore-not-found \
   --wait=true \
   --timeout=15m
 
-kubectl delete appproject de-ai-07 \
+kubectl delete appproject steam-insight \
   -n argocd \
   --ignore-not-found
 

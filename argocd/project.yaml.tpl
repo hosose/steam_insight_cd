@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: de-ai-07
+  name: steam-insight
   namespace: argocd
 spec:
-  description: DE-AI-07 EKS Auto Mode WEB/WAS project
+  description: Steam Insight EKS Auto Mode WEB/WAS project
 
   sourceRepos:
     - "__CD_REPO_URL__"
 
   destinations:
-    - namespace: de-ai-07
+    - namespace: steam-insight
       server: https://kubernetes.default.svc
 
   clusterResourceWhitelist:

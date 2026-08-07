@@ -5,7 +5,7 @@ metadata:
   # Prometheus ServiceMonitor가 실제 운영 WAS Service만 선택하도록 사용하는 라벨 
   labels:
     app.kubernetes.io/name: was
-    app.kubernetes.io/part-of: de-ai-07
+    app.kubernetes.io/part-of: steam-insight
     monitoring: enabled
     
 spec:

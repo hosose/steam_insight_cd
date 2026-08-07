@@ -267,8 +267,8 @@ jobs:
             "WEB_IMAGE=${WEB_IMAGE}:${IMAGE_TAG}" \
             "WAS_IMAGE=${WAS_IMAGE}:${IMAGE_TAG}"
 
-          kustomize build . > /tmp/de-ai-07.yaml
-          test -s /tmp/de-ai-07.yaml
+          kustomize build . > /tmp/steam-insight.yaml
+          test -s /tmp/steam-insight.yaml
 
       - name: Commit and push CD change
         working-directory: steam_insight_cd

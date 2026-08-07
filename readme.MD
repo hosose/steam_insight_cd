@@ -125,16 +125,16 @@ steam_insight_cd/
     # 본인 리전 교체
     aws ecr describe-repositories --region us-east-2  --query "repositories[].{Name:repositoryName,URI:repositoryUri}"  --output table
     ---
-    de-ai-07-eks-auto-dev/web           |  827913617635.dkr.ecr.us-east-2.amazonaws.com/de-ai-07-eks-auto-dev/web            |
-    de-ai-07-eks-auto-dev/was           |  827913617635.dkr.ecr.us-east-2.amazonaws.com/de-ai-07-eks-auto-dev/was            |
+    steam-insight-dev/web           |  827913617635.dkr.ecr.us-east-2.amazonaws.com/steam-insight-dev/web            |
+    steam-insight-dev/was           |  827913617635.dkr.ecr.us-east-2.amazonaws.com/steam-insight-dev/was            |
   ```
     # kustomization.yaml 수정
     images:
     - name: WAS_IMAGE
-    newName: 827913617635.dkr.ecr.us-east-2.amazonaws.com/de-ai-07-eks-auto-dev/was
+    newName: 827913617635.dkr.ecr.us-east-2.amazonaws.com/steam-insight-dev/was
     newTag: 5f68fff31524
     - name: WEB_IMAGE
-    newName: 827913617635.dkr.ecr.us-east-2.amazonaws.com/de-ai-07-eks-auto-dev/web
+    newName: 827913617635.dkr.ecr.us-east-2.amazonaws.com/steam-insight-dev/web
     newTag: 5f68fff31524
   ```
 
@@ -142,15 +142,15 @@ steam_insight_cd/
 ```
   # 태그 확인 - `dev-latest, 해시값 확인`
   # --repository-name 뒷값 본인것으로 수정후 테스트함
-  aws ecr describe-images  --repository-name "de-ai-07-eks-auto-dev/web"  --image-ids imageTag=dev-latest  --region us-east-2  --query "imageDetails[0].imageTags"  --output json
-    aws ecr describe-images  --repository-name "de-ai-07-eks-auto-dev/web" --region us-east-2 --output json
+  aws ecr describe-images  --repository-name "steam-insight-dev/web"  --image-ids imageTag=dev-latest  --region us-east-2  --query "imageDetails[0].imageTags"  --output json
+    aws ecr describe-images  --repository-name "steam-insight-dev/web" --region us-east-2 --output json
   ---
 [
     "5e1450997df9",
     "dev-latest"
 ]
   
-  aws ecr describe-images  --repository-name "de-ai-07-eks-auto-dev/was"  --image-ids imageTag=dev-latest  --region us-east-2  --query "imageDetails[0].imageTags"  --output json
+  aws ecr describe-images  --repository-name "steam-insight-dev/was"  --image-ids imageTag=dev-latest  --region us-east-2  --query "imageDetails[0].imageTags"  --output json
   ---
 [
     "dev-latest",
@@ -186,12 +186,11 @@ steam_insight_cd/
     ||             clusters              ||
     |+-----------------------------------+|
     ||  de-ai-05-devops-tf-eks-auto-dev  ||
-    ||  de-ai-07-eks-auto-dev            ||
-    ||  de-ai-08-devops-tf-eks-auto-dev  ||
+    ||  steam-insight-dev            ||
     |+-----------------------------------+|
 
     # 연결 (클러스터명 교체)
-    aws eks update-kubeconfig --region us-east-2 --name de-ai-07-eks-auto-dev
+    aws eks update-kubeconfig --region us-east-2 --name steam-insight-dev
   ```
 
 - Argo CD 설치
@@ -213,15 +212,15 @@ steam_insight_cd/
   # Argo CD와 Github 저장소 연결 상태 확인
   kubectl get applications -n argocd
   ---
-  NAME       SYNC STATUS   HEALTH STATUS
-  de-ai-07   OutOfSync     Progressing
+  NAME          SYNC STATUS   HEALTH STATUS
+  steam-insight OutOfSync     Progressing
   ---
   private인 경우 절차 추가로 문서로 제공
 ```
 - 현재 상황 체크 
 ```
   # pod 상태 확인
-  kubectl get pods -n de-ai-07
+  kubectl get pods -n steam-insight
   ---
     NAME                   READY   STATUS             RESTARTS       AGE
     was-769f6bc4d-7w86z    0/1     ImagePullBackOff   0              5m42s
@@ -232,16 +231,16 @@ steam_insight_cd/
     web-59489cc989-nxqtc   1/1     Running            4 (129m ago)   130m
   
   # Ingress, ALB 주소 체크
-  kubectl get ingress -n de-ai-07
+  kubectl get ingress -n steam-insight
   ---
     NAME         CLASS   HOSTS   ADDRESS                                                                 PORTS   AGE
     public-alb   alb     *       k8s-deai07-publical-db3d79d7f3-1318032631.us-east-2.elb.amazonaws.com   80      108m
 
   # 현재 클러스터에 배포된 이미지 확인
-  kubectl get deployment web was  -n de-ai-07  -o jsonpath="{range .items[*]}{.metadata.name}{': '}{.spec.template.spec.containers[0].image}{'\n'}{end}"
+  kubectl get deployment web was  -n steam-insight  -o jsonpath="{range .items[*]}{.metadata.name}{': '}{.spec.template.spec.containers[0].image}{'\n'}{end}"
   ---
-    web: 827913617635.dkr.ecr.us-east-2.amazonaws.com/de-ai-07-eks-auto-dev/web:dev-latest
-    was: 827913617635.dkr.ecr.us-east-2.amazonaws.com/de-ai-07-eks-auto-dev/was:dev-latest
+    web: 827913617635.dkr.ecr.us-east-2.amazonaws.com/steam-insight-dev/web:dev-latest
+    was: 827913617635.dkr.ecr.us-east-2.amazonaws.com/steam-insight-dev/was:dev-latest
 ```
 
 - CI 저장소 ci.yaml jobs중 `update-cd:` 이하 주석 해제

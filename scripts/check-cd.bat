@@ -2,12 +2,12 @@
 setlocal EnableExtensions DisableDelayedExpansion
 chcp 65001 >nul
 
-if not defined APP_NAMESPACE set "APP_NAMESPACE=de-ai-07"
+if not defined APP_NAMESPACE set "APP_NAMESPACE=steam-insight"
 
 echo ============================================================
 echo Argo CD Application
 echo ============================================================
-kubectl get application de-ai-07 -n argocd -o wide
+kubectl get application steam-insight -n argocd -o wide
 
 echo.
 echo ============================================================

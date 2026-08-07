@@ -5,13 +5,13 @@ set -euo pipefail
 while true; do
   clear
   echo "========== HPA =========="
-  kubectl get hpa -n de-ai-07 || true
+  kubectl get hpa -n steam-insight || true
   echo
   echo "========== POD =========="
-  kubectl get pods -n de-ai-07 -o wide || true
+  kubectl get pods -n steam-insight -o wide || true
   echo
   echo "========== POD METRICS =========="
-  kubectl top pods -n de-ai-07 || true
+  kubectl top pods -n steam-insight || true
   echo
   echo "========== NODE =========="
   kubectl get nodes || true

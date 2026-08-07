@@ -2,14 +2,14 @@
 setlocal EnableExtensions DisableDelayedExpansion
 chcp 65001 >nul
 
-kubectl delete application de-ai-07 ^
+kubectl delete application steam-insight ^
   -n argocd ^
   --ignore-not-found ^
   --wait=true ^
   --timeout=15m
 if errorlevel 1 exit /b 1
 
-kubectl delete appproject de-ai-07 -n argocd --ignore-not-found
+kubectl delete appproject steam-insight -n argocd --ignore-not-found
 if errorlevel 1 exit /b 1
 
 kubectl delete namespace argocd ^

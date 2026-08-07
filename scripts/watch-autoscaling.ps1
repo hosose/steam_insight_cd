@@ -5,13 +5,13 @@ while ($true) {
     Clear-Host
 
     Write-Host "========== HPA =========="
-    kubectl get hpa -n de-ai-07
+    kubectl get hpa -n steam-insight
 
     Write-Host "`n========== POD =========="
-    kubectl get pods -n de-ai-07 -o wide
+    kubectl get pods -n steam-insight -o wide
 
     Write-Host "`n========== POD METRICS =========="
-    kubectl top pods -n de-ai-07
+    kubectl top pods -n steam-insight
 
     Write-Host "`n========== NODE =========="
     kubectl get nodes

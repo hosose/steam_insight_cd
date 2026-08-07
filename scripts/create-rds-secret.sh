@@ -3,7 +3,7 @@ set -Eeuo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CI_INFRA_DIR="${1:-${CI_INFRA_DIR:-${ROOT_DIR}/../steam_insight_ci/infra}}"
-APP_NAMESPACE="${APP_NAMESPACE:-de-ai-07}"
+APP_NAMESPACE="${APP_NAMESPACE:-steam-insight}"
 
 for command_name in terraform aws kubectl python3; do
   if ! command -v "${command_name}" >/dev/null 2>&1; then
@@ -56,7 +56,7 @@ kubectl create secret generic rds-secret \
 
 kubectl label secret rds-secret \
   --namespace "${APP_NAMESPACE}" \
-  app.kubernetes.io/part-of=de-ai-07 \
+  app.kubernetes.io/part-of=steam-insight \
   --overwrite
 
 echo "[OK] ${APP_NAMESPACE}/rds-secret 생성 완료"
