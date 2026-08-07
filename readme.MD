@@ -14,13 +14,13 @@
 ```text
   개발자 Push
   ↓
-  devops_tf_k8s_ci / GitHub Actions
+  steam_insight_ci / GitHub Actions
   ├─ Terraform·Docker 검증
   ├─ WEB/WAS 이미지 Build
   ├─ ECR Push
-  └─ devops_tf_k8s_cd의 이미지 태그를 Git Commit SHA로 변경 <- 태그변경
+  └─ steam_insight_cd의 이미지 태그를 Git Commit SHA로 변경 <- 태그변경
             ↓
-      devops_tf_k8s_cd main
+      steam_insight_cd main
             ↓
       Argo CD 자동 감지
             ↓
@@ -34,7 +34,7 @@
 
   # 파일 구조 (모니터링, 부하테스트 제외)
   ```text
-tf-k8s-cd/
+steam_insight_cd/
 
 - 점검용
 ├─ .github/                        : CD 저장소 자체의 파일과 문법 검증
@@ -95,7 +95,7 @@ tf-k8s-cd/
    ├─ open-argocd.sh
    ├─ render_argocd.py             : Kustomize 설정의 WEB/WAS 이미지 주소와 태그를 자동으로 수정
    ├─ secret_to_env.py             : AWS Secrets Manager가 반환한 JSON 값을 환경변수 형태로 변환
-   ├─ setup-ci-cd-link.bat         : tf-k8s-ci와 tf-k8s-cd 저장소를 연결하기 위한 설정을 수행
+   ├─ setup-ci-cd-link.bat         : steam_insight_ci와 steam_insight_cd 저장소를 연결하기 위한 설정을 수행
    ├─ setup-ci-cd-link.sh
    └─ update_images.py             : .tpl 형식으로 작성된 Argo CD 템플릿을 실제 YAML 파일로 변환
 ```
@@ -197,7 +197,7 @@ tf-k8s-cd/
 - Argo CD 설치
 ```
   # 설치
-  .\scripts\bootstrap-cd.bat hosose/devops_tf_k8s_cd
+  .\scripts\bootstrap-cd.bat hosose/steam_insight_cd
   # Argo CD 상태 확인 - Argo CD 파트 확인
   kubectl get pods -n argocd
   ---
@@ -248,18 +248,18 @@ tf-k8s-cd/
   - 아래 2개 변수를 설정
     - CD_REPOSITORY
       ```
-        gh variable set CD_REPOSITORY --repo hosose/devops_tf_k8s_ci --body "hosose/devops_tf_k8s_cd"
+        gh variable set CD_REPOSITORY --repo hosose/steam_insight_ci --body "hosose/steam_insight_cd"
       ```
     - CD_REPOSITORY_TOKEN
       ```
-        gh auth token | gh secret set CD_REPOSITORY_TOKEN --repo hosose/devops_tf_k8s_ci
+        gh auth token | gh secret set CD_REPOSITORY_TOKEN --repo hosose/steam_insight_ci
       ```
 ```
-gh variable set CD_REPOSITORY --repo hosose/devops_tf_k8s_ci --body "hosose/devops_tf_k8s_cd"
-✓ Created variable CD_REPOSITORY for hosose/devops_tf_k8s_ci
+gh variable set CD_REPOSITORY --repo hosose/steam_insight_ci --body "hosose/steam_insight_cd"
+✓ Created variable CD_REPOSITORY for hosose/steam_insight_ci
 
-gh auth token | gh secret set CD_REPOSITORY_TOKEN --repo hosose/devops_tf_k8s_ci          
-✓ Set Actions secret CD_REPOSITORY_TOKEN for hosose/devops_tf_k8s_ci
+gh auth token | gh secret set CD_REPOSITORY_TOKEN --repo hosose/steam_insight_ci          
+✓ Set Actions secret CD_REPOSITORY_TOKEN for hosose/steam_insight_ci
 ```      
 
 - sad

@@ -4,12 +4,12 @@ set -euo pipefail
 
 # 인자: GitHub 소유자, CD 저장소 이름, 브랜치 이름이다.
 GITHUB_OWNER="${1:-}"
-CD_REPOSITORY="${2:-tf-k8s-cd}"
+CD_REPOSITORY="${2:-steam_insight_cd}"
 CD_BRANCH="${3:-main}"
 
 if [[ -z "${GITHUB_OWNER}" ]]; then
   echo "사용법: ./scripts/setup-monitoring.sh GitHub_ID [CD저장소명] [브랜치]"
-  echo "예시: ./scripts/setup-monitoring.sh my-id tf-k8s-cd main"
+  echo "예시: ./scripts/setup-monitoring.sh my-id steam_insight_cd main"
   exit 1
 fi
 

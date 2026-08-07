@@ -9,7 +9,7 @@ if "%~1"=="" (
   if defined CI_INFRA_DIR (
     set "CI_INFRA_DIR=%CI_INFRA_DIR%"
   ) else (
-    set "CI_INFRA_DIR=%ROOT_DIR%\..\tf-k8s-ci\infra"
+    set "CI_INFRA_DIR=%ROOT_DIR%\..\steam_insight_ci\infra"
   )
 ) else (
   set "CI_INFRA_DIR=%~1"
@@ -41,7 +41,7 @@ if errorlevel 1 (
 )
 
 if not exist "%CI_INFRA_DIR%" (
-  echo [ERROR] tf-k8s-ci Terraform 디렉터리가 없습니다:
+  echo [ERROR] steam_insight_ci Terraform 디렉터리가 없습니다:
   echo         %CI_INFRA_DIR%
   exit /b 1
 )

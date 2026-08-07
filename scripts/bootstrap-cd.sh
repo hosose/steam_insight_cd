@@ -2,14 +2,14 @@
 set -Eeuo pipefail
 
 if [[ $# -lt 1 ]]; then
-  echo "사용법: $0 GitHub_ID/tf-k8s-cd [tf-k8s-ci/infra 경로]" >&2
+  echo "사용법: $0 GitHub_ID/steam_insight_cd [steam_insight_ci/infra 경로]" >&2
   exit 1
 fi
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CD_REPOSITORY="${1%.git}"
 CD_REPOSITORY="${CD_REPOSITORY//\\//}"
-CI_INFRA_DIR="${2:-${CI_INFRA_DIR:-${ROOT_DIR}/../tf-k8s-ci/infra}}"
+CI_INFRA_DIR="${2:-${CI_INFRA_DIR:-${ROOT_DIR}/../steam_insight_ci/infra}}"
 CD_REPO_URL="https://github.com/${CD_REPOSITORY}.git"
 INITIAL_IMAGE_TAG="${INITIAL_IMAGE_TAG:-dev-latest}"
 APP_NAMESPACE="${APP_NAMESPACE:-de-ai-07}"
@@ -57,7 +57,7 @@ aws eks update-kubeconfig \
 if [[ -n "${ARGOCD_GITHUB_TOKEN:-}" ]]; then
   ARGOCD_GITHUB_USERNAME="${ARGOCD_GITHUB_USERNAME:-${CD_REPOSITORY%%/*}}"
 
-  kubectl create secret generic tf-k8s-cd-repository \
+  kubectl create secret generic steam-insight-cd-repository \
     --namespace argocd \
     --from-literal=type=git \
     --from-literal=url="${CD_REPO_URL}" \
@@ -66,7 +66,7 @@ if [[ -n "${ARGOCD_GITHUB_TOKEN:-}" ]]; then
     --dry-run=client \
     -o yaml | kubectl apply -f -
 
-  kubectl label secret tf-k8s-cd-repository \
+  kubectl label secret steam-insight-cd-repository \
     --namespace argocd \
     argocd.argoproj.io/secret-type=repository \
     --overwrite

@@ -28,7 +28,7 @@ spec:
         valueFiles:
           - $values/monitoring/kube-prometheus-stack-values.yaml
 
-    # 두 번째 source: 현재 tf-k8s-cd 저장소를 values 전용 source로 등록한다.
+    # 두 번째 source: 현재 steam_insight_cd 저장소를 values 전용 source로 등록한다.
     - repoURL: https://github.com/${GITHUB_OWNER}/${CD_REPOSITORY}.git
       targetRevision: ${CD_BRANCH}
       ref: values

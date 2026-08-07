@@ -19,5 +19,5 @@ kubectl delete namespace argocd ^
 if errorlevel 1 exit /b 1
 
 echo [OK] Argo CD와 GitOps 애플리케이션 리소스를 제거했습니다.
-echo [INFO] AWS 인프라는 tf-k8s-ci의 Terraform destroy로 별도 제거하세요.
+echo [INFO] AWS 인프라는 steam_insight_ci의 Terraform destroy로 별도 제거하세요.
 exit /b 0

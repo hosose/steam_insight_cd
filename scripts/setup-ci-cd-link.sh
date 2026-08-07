@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 if [[ $# -ne 2 ]]; then
-  echo "사용법: $0 GitHub_ID/tf-k8s-ci GitHub_ID/tf-k8s-cd" >&2
+  echo "사용법: $0 GitHub_ID/steam_insight_ci GitHub_ID/steam_insight_cd" >&2
   exit 1
 fi
 
@@ -23,7 +23,7 @@ gh variable set CD_REPOSITORY \
 TOKEN="${CD_REPOSITORY_TOKEN:-}"
 
 if [[ -z "${TOKEN}" ]]; then
-  read -r -s -p "tf-k8s-cd Write Token: " TOKEN
+  read -r -s -p "steam_insight_cd Write Token: " TOKEN
   echo
 fi
 

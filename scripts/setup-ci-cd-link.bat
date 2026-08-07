@@ -3,7 +3,7 @@ setlocal EnableExtensions DisableDelayedExpansion
 chcp 65001 >nul
 
 if "%~2"=="" (
-  echo 사용법: %~nx0 GitHub_ID\tf-k8s-ci GitHub_ID\tf-k8s-cd
+  echo 사용법: %~nx0 GitHub_ID\steam_insight_ci GitHub_ID\steam_insight_cd
   exit /b 1
 )
 

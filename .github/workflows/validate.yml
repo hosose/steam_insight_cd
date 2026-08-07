@@ -34,7 +34,7 @@ jobs:
       contents: read
 
     steps:
-      - name: Checkout tf-k8s-cd
+      - name: Checkout steam_insight_cd
         uses: actions/checkout@v7
 
       - name: Install Kustomize

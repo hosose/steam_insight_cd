@@ -9,12 +9,12 @@ set "CD_REPOSITORY=%~2"
 set "CD_BRANCH=%~3"
 
 rem 선택 인자에 기본값을 설정한다.
-if not defined CD_REPOSITORY set "CD_REPOSITORY=tf-k8s-cd"
+if not defined CD_REPOSITORY set "CD_REPOSITORY=steam_insight_cd"
 if not defined CD_BRANCH set "CD_BRANCH=main"
 
 if not defined GITHUB_OWNER (
   echo 사용법: scripts\setup-monitoring.bat GitHub_ID [CD저장소명] [브랜치]
-  echo 예시: scripts\setup-monitoring.bat my-id tf-k8s-cd main
+  echo 예시: scripts\setup-monitoring.bat my-id steam_insight_cd main
   exit /b 1
 )
 

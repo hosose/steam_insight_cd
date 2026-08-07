@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-CI_INFRA_DIR="${1:-${CI_INFRA_DIR:-${ROOT_DIR}/../tf-k8s-ci/infra}}"
+CI_INFRA_DIR="${1:-${CI_INFRA_DIR:-${ROOT_DIR}/../steam_insight_ci/infra}}"
 APP_NAMESPACE="${APP_NAMESPACE:-de-ai-07}"
 
 for command_name in terraform aws kubectl python3; do

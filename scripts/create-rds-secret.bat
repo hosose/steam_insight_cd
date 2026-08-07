@@ -9,7 +9,7 @@ if "%~1"=="" (
   if defined CI_INFRA_DIR (
     set "CI_INFRA_DIR=%CI_INFRA_DIR%"
   ) else (
-    set "CI_INFRA_DIR=%ROOT_DIR%\..\tf-k8s-ci\infra"
+    set "CI_INFRA_DIR=%ROOT_DIR%\..\steam_insight_ci\infra"
   )
 ) else (
   set "CI_INFRA_DIR=%~1"

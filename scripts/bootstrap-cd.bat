@@ -3,7 +3,7 @@ setlocal EnableExtensions DisableDelayedExpansion
 chcp 65001 >nul
 
 if "%~1"=="" (
-  echo 사용법: %~nx0 GitHub_ID\tf-k8s-cd [tf-k8s-ci\infra 경로]
+  echo 사용법: %~nx0 GitHub_ID\steam_insight_cd [steam_insight_ci\infra 경로]
   exit /b 1
 )
 
@@ -18,7 +18,7 @@ if "%~2"=="" (
   if defined CI_INFRA_DIR (
     set "CI_INFRA_DIR=%CI_INFRA_DIR%"
   ) else (
-    set "CI_INFRA_DIR=%ROOT_DIR%\..\devops_tf_k8s_ci\infra"
+    set "CI_INFRA_DIR=%ROOT_DIR%\..\steam_insight_ci\infra"
   )
 ) else (
   set "CI_INFRA_DIR=%~2"
@@ -69,7 +69,7 @@ if defined ARGOCD_GITHUB_TOKEN (
     for /f "tokens=1 delims=/" %%A in ("%CD_REPOSITORY%") do set "ARGOCD_GITHUB_USERNAME=%%A"
   )
 
-  kubectl create secret generic tf-k8s-cd-repository ^
+  kubectl create secret generic steam-insight-cd-repository ^
     --namespace argocd ^
     --from-literal=type=git ^
     --from-literal=url="%CD_REPO_URL%" ^
@@ -79,7 +79,7 @@ if defined ARGOCD_GITHUB_TOKEN (
     -o yaml | kubectl apply -f -
   if errorlevel 1 exit /b 1
 
-  kubectl label secret tf-k8s-cd-repository ^
+  kubectl label secret steam-insight-cd-repository ^
     --namespace argocd ^
     argocd.argoproj.io/secret-type=repository ^
     --overwrite
@@ -88,7 +88,7 @@ if defined ARGOCD_GITHUB_TOKEN (
   echo [INFO] ARGOCD_GITHUB_TOKEN이 없어 공개 저장소로 구성합니다.
 )
 
-set "RENDER_DIR=%TEMP%\tf-k8s-cd-render-%RANDOM%"
+set "RENDER_DIR=%TEMP%\steam-insight-cd-render-%RANDOM%"
 mkdir "%RENDER_DIR%"
 if errorlevel 1 exit /b 1
 
