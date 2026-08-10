@@ -9,6 +9,7 @@ resources:
   - was-service.yaml
   - was-hpa.yaml
   - was-pdb.yaml
+  - game-collector-cronjob.yaml
   - web-deployment.yaml
   - web-service.yaml
   - web-hpa.yaml
