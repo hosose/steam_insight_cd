@@ -110,6 +110,44 @@ data:
           ],
           "fieldConfig": {"defaults": {"unit": "percent", "min": 0, "max": 100}, "overrides": []},
           "gridPos": {"h": 9, "w": 12, "x": 12, "y": 24}
+        },
+        {
+          "type": "stat",
+          "title": "Game Collector CronJob 성공 상태",
+          "datasource": {"type": "prometheus", "uid": "${datasource}"},
+          "targets": [
+            {"expr": "sum(kube_job_status_succeeded{namespace=\"steam-insight\",job_name=~\"game-collector-.*\"})", "refId": "A"}
+          ],
+          "gridPos": {"h": 6, "w": 6, "x": 0, "y": 33}
+        },
+        {
+          "type": "stat",
+          "title": "Game Collector 실행 소요 시간 (초)",
+          "datasource": {"type": "prometheus", "uid": "${datasource}"},
+          "targets": [
+            {"expr": "kube_job_status_completion_time{namespace=\"steam-insight\",job_name=~\"game-collector-.*\"} - kube_job_status_start_time{namespace=\"steam-insight\",job_name=~\"game-collector-.*\"}", "refId": "A"}
+          ],
+          "fieldConfig": {"defaults": {"unit": "s"}, "overrides": []},
+          "gridPos": {"h": 6, "w": 6, "x": 6, "y": 33}
+        },
+        {
+          "type": "timeseries",
+          "title": "Game Collector CPU 사용량 (15분 스파이크)",
+          "datasource": {"type": "prometheus", "uid": "${datasource}"},
+          "targets": [
+            {"expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"steam-insight\",pod=~\"game-collector-.*\"}[5m]))", "legendFormat": "Collector CPU", "refId": "A"}
+          ],
+          "gridPos": {"h": 6, "w": 6, "x": 12, "y": 33}
+        },
+        {
+          "type": "timeseries",
+          "title": "Game Collector Memory 사용량",
+          "datasource": {"type": "prometheus", "uid": "${datasource}"},
+          "targets": [
+            {"expr": "sum(container_memory_working_set_bytes{namespace=\"steam-insight\",pod=~\"game-collector-.*\"})", "legendFormat": "Collector Memory", "refId": "A"}
+          ],
+          "fieldConfig": {"defaults": {"unit": "bytes"}, "overrides": []},
+          "gridPos": {"h": 6, "w": 6, "x": 18, "y": 33}
         }
       ],
       "refresh": "10s",
