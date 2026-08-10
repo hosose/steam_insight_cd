@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: game-collector
+  labels:
+    app.kubernetes.io/name: game-collector
+    app.kubernetes.io/part-of: steam-insight
+    app.kubernetes.io/component: backend
+spec:
+  schedule: "*/15 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      # 콜드스타트 부트스트랩(장르당 최소 게임 수를 채우는 단계)은 신규 appid가
+      # 많으면 15분을 넘기기도 한다(로컬 검증 시 최대 20분+ 관측). concurrencyPolicy:
+      # Forbid가 이미 중복 실행을 막아주므로, 데드라인은 "완전히 멈춘 프로세스"를
+      # 잡는 안전장치로만 넉넉하게 잡는다 - 정상 실행을 중간에 끊지 않도록.
+      activeDeadlineSeconds: 1700
+
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: game-collector
+            app.kubernetes.io/part-of: steam-insight
+            app.kubernetes.io/component: backend
+        spec:
+          restartPolicy: Never
+
+          containers:
+            - name: game-collector
+              image: WAS_IMAGE
+              imagePullPolicy: Always
+              # WAS 이미지에 이미 db.py/steam_api.py/collector.py가 같이 들어있어
+              # 별도 이미지 없이 커맨드만 바꿔서 단발 수집 프로세스로 실행한다.
+              command: ["python", "collector.py"]
+
+              envFrom:
+                - secretRef:
+                    name: rds-secret
+
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+                limits:
+                  cpu: 500m
+                  memory: 512Mi
