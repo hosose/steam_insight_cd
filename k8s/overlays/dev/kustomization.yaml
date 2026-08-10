@@ -12,7 +12,7 @@ commonLabels:
 images:
 - name: WAS_IMAGE
   newName: 827913617635.dkr.ecr.us-east-2.amazonaws.com/steam-insight-dev/was
-  newTag: b50eaed7c061
+  newTag: b8dc5e1ab6e6
 - name: WEB_IMAGE
   newName: 827913617635.dkr.ecr.us-east-2.amazonaws.com/steam-insight-dev/web
-  newTag: b50eaed7c061
+  newTag: b8dc5e1ab6e6
